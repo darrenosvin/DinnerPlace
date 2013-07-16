@@ -1,0 +1,306 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C504A3FC179571D100BEDF36 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C504A3FB179571D100BEDF36 /* UIKit.framework */; };
+		C504A3FE179571D100BEDF36 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C504A3FD179571D100BEDF36 /* Foundation.framework */; };
+		C504A400179571D100BEDF36 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C504A3FF179571D100BEDF36 /* CoreGraphics.framework */; };
+		C504A402179571D100BEDF36 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C504A401179571D100BEDF36 /* CoreData.framework */; };
+		C504A408179571D100BEDF36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C504A406179571D100BEDF36 /* InfoPlist.strings */; };
+		C504A40A179571D100BEDF36 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C504A409179571D100BEDF36 /* main.m */; };
+		C504A40E179571D100BEDF36 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C504A40D179571D100BEDF36 /* AppDelegate.m */; };
+		C504A410179571D100BEDF36 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C504A40F179571D100BEDF36 /* Default.png */; };
+		C504A412179571D100BEDF36 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C504A411179571D100BEDF36 /* Default@2x.png */; };
+		C504A414179571D100BEDF36 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C504A413179571D100BEDF36 /* Default-568h@2x.png */; };
+		C504A417179571D100BEDF36 /* DinnerPlace.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C504A415179571D100BEDF36 /* DinnerPlace.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C504A3F8179571D100BEDF36 /* DinnerPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DinnerPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C504A3FB179571D100BEDF36 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C504A3FD179571D100BEDF36 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C504A3FF179571D100BEDF36 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C504A401179571D100BEDF36 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C504A405179571D100BEDF36 /* DinnerPlace-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DinnerPlace-Info.plist"; sourceTree = "<group>"; };
+		C504A407179571D100BEDF36 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C504A409179571D100BEDF36 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C504A40B179571D100BEDF36 /* DinnerPlace-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DinnerPlace-Prefix.pch"; sourceTree = "<group>"; };
+		C504A40C179571D100BEDF36 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C504A40D179571D100BEDF36 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C504A40F179571D100BEDF36 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		C504A411179571D100BEDF36 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		C504A413179571D100BEDF36 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C504A416179571D100BEDF36 /* DinnerPlace.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DinnerPlace.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C504A3F5179571D100BEDF36 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C504A3FC179571D100BEDF36 /* UIKit.framework in Frameworks */,
+				C504A3FE179571D100BEDF36 /* Foundation.framework in Frameworks */,
+				C504A400179571D100BEDF36 /* CoreGraphics.framework in Frameworks */,
+				C504A402179571D100BEDF36 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C504A3EF179571D100BEDF36 = {
+			isa = PBXGroup;
+			children = (
+				C504A403179571D100BEDF36 /* DinnerPlace */,
+				C504A3FA179571D100BEDF36 /* Frameworks */,
+				C504A3F9179571D100BEDF36 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C504A3F9179571D100BEDF36 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C504A3F8179571D100BEDF36 /* DinnerPlace.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C504A3FA179571D100BEDF36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C504A3FB179571D100BEDF36 /* UIKit.framework */,
+				C504A3FD179571D100BEDF36 /* Foundation.framework */,
+				C504A3FF179571D100BEDF36 /* CoreGraphics.framework */,
+				C504A401179571D100BEDF36 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C504A403179571D100BEDF36 /* DinnerPlace */ = {
+			isa = PBXGroup;
+			children = (
+				C504A40C179571D100BEDF36 /* AppDelegate.h */,
+				C504A40D179571D100BEDF36 /* AppDelegate.m */,
+				C504A415179571D100BEDF36 /* DinnerPlace.xcdatamodeld */,
+				C504A404179571D100BEDF36 /* Supporting Files */,
+			);
+			path = DinnerPlace;
+			sourceTree = "<group>";
+		};
+		C504A404179571D100BEDF36 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C504A405179571D100BEDF36 /* DinnerPlace-Info.plist */,
+				C504A406179571D100BEDF36 /* InfoPlist.strings */,
+				C504A409179571D100BEDF36 /* main.m */,
+				C504A40B179571D100BEDF36 /* DinnerPlace-Prefix.pch */,
+				C504A40F179571D100BEDF36 /* Default.png */,
+				C504A411179571D100BEDF36 /* Default@2x.png */,
+				C504A413179571D100BEDF36 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C504A3F7179571D100BEDF36 /* DinnerPlace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C504A41A179571D100BEDF36 /* Build configuration list for PBXNativeTarget "DinnerPlace" */;
+			buildPhases = (
+				C504A3F4179571D100BEDF36 /* Sources */,
+				C504A3F5179571D100BEDF36 /* Frameworks */,
+				C504A3F6179571D100BEDF36 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DinnerPlace;
+			productName = DinnerPlace;
+			productReference = C504A3F8179571D100BEDF36 /* DinnerPlace.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C504A3F0179571D100BEDF36 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = osvin;
+			};
+			buildConfigurationList = C504A3F3179571D100BEDF36 /* Build configuration list for PBXProject "DinnerPlace" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C504A3EF179571D100BEDF36;
+			productRefGroup = C504A3F9179571D100BEDF36 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C504A3F7179571D100BEDF36 /* DinnerPlace */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C504A3F6179571D100BEDF36 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C504A408179571D100BEDF36 /* InfoPlist.strings in Resources */,
+				C504A410179571D100BEDF36 /* Default.png in Resources */,
+				C504A412179571D100BEDF36 /* Default@2x.png in Resources */,
+				C504A414179571D100BEDF36 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C504A3F4179571D100BEDF36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C504A40A179571D100BEDF36 /* main.m in Sources */,
+				C504A40E179571D100BEDF36 /* AppDelegate.m in Sources */,
+				C504A417179571D100BEDF36 /* DinnerPlace.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C504A406179571D100BEDF36 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C504A407179571D100BEDF36 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C504A418179571D100BEDF36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C504A419179571D100BEDF36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C504A41B179571D100BEDF36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DinnerPlace/DinnerPlace-Prefix.pch";
+				INFOPLIST_FILE = "DinnerPlace/DinnerPlace-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C504A41C179571D100BEDF36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DinnerPlace/DinnerPlace-Prefix.pch";
+				INFOPLIST_FILE = "DinnerPlace/DinnerPlace-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C504A3F3179571D100BEDF36 /* Build configuration list for PBXProject "DinnerPlace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C504A418179571D100BEDF36 /* Debug */,
+				C504A419179571D100BEDF36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C504A41A179571D100BEDF36 /* Build configuration list for PBXNativeTarget "DinnerPlace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C504A41B179571D100BEDF36 /* Debug */,
+				C504A41C179571D100BEDF36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C504A415179571D100BEDF36 /* DinnerPlace.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C504A416179571D100BEDF36 /* DinnerPlace.xcdatamodel */,
+			);
+			currentVersion = C504A416179571D100BEDF36 /* DinnerPlace.xcdatamodel */;
+			path = DinnerPlace.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = C504A3F0179571D100BEDF36 /* Project object */;
+}
