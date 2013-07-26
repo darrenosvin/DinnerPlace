@@ -1,0 +1,88 @@
+// !$*UTF8*$!
+{
+	C504A3F0179571D100BEDF36 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = C5E9E5C2179E342E004DC1FA /* DinnerPlace */;
+		activeTarget = C504A3F7179571D100BEDF36 /* DinnerPlace */;
+		codeSenseManager = C5E9E5EB179E343B004DC1FA /* Code sense */;
+		executables = (
+			C5E9E5C2179E342E004DC1FA /* DinnerPlace */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					356,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 396244014;
+			PBXWorkspaceStateSaveDate = 396244014;
+		};
+		sourceControlManager = C5E9E5EA179E343B004DC1FA /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	C504A3F7179571D100BEDF36 /* DinnerPlace */ = {
+		activeExec = 0;
+		executables = (
+			C5E9E5C2179E342E004DC1FA /* DinnerPlace */,
+		);
+	};
+	C5E9E5C2179E342E004DC1FA /* DinnerPlace */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = DinnerPlace;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	C5E9E5EA179E343B004DC1FA /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	C5E9E5EB179E343B004DC1FA /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}

@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 
 @implementation AppDelegate
+@synthesize userProfile;
+@synthesize fbLogin;
 
 - (void)dealloc
 {
@@ -22,13 +24,83 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize rootViewController = _rootViewController;
+@synthesize navController = _navController;
+@synthesize session = _session;
+@synthesize indicatorView = _indicatorView;
+
+-(void)setFbLogin:(BOOL)fbLogin_ {
+
+    //self.fbLogin = fbLogin_;
+
+    fbLogin = fbLogin_;
+
+    [[NSUserDefaults standardUserDefaults]setBool:fbLogin_ forKey:fbIsLogin];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+}
+
+-(void)setUserProfile:(UserProfile *)userProfile_{
+
+    if (self.userProfile != userProfile_) {
+        userProfile = [userProfile_ retain];
+
+        NSData  *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:self.userProfile];
+        [[NSUserDefaults standardUserDefaults]setObject:myEncodedObject forKey:fbProfile];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+
+    }
+}
+
+-(void)applicationNetworkReachability {
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNetworkStatus) name:FXReachabilityStatusDidChangeNotification object:nil];
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+
+    NSString *path = @"/Applications/Cydia.app";
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+
+    if (fileExists) {
+        //device is jailbroken
+        NSLog(@"device is jailbroken");
+    } else {
+        NSLog(@"device is not jailbroken");
+
+    }
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
+
+    self.fbLogin = [[NSUserDefaults standardUserDefaults]boolForKey:fbIsLogin];
+
+    if (self.fbLogin) {
+
+        NSData *data =  [[NSUserDefaults standardUserDefaults]objectForKey:fbProfile];
+        self.userProfile = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+
+    }
+
+    NSLog(@"fbLogin = %i",self.fbLogin);
+
+    RootViewController *rootViewController = [[RootViewController alloc]init];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:rootViewController];
+    
+    navController.navigationBarHidden = YES;
+    navController.navigationBar.tintColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"strip.png"]];
+    
+    [self.window setRootViewController:navController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+
+
+    //ApplicatonReachabilityStatus...
+    [self applicationNetworkReachability];
+
     return YES;
 }
 
@@ -52,13 +124,26 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+      [FBSession.activeSession handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+    [self.session close];
+
 }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [self.session handleOpenURL:url];
+}
+
+
 
 - (void)saveContext
 {
@@ -156,3 +241,9 @@
 }
 
 @end
+
+//AppDelegate Share.......
+AppDelegate * appDelegate(void)
+{
+    return (AppDelegate *)[UIApplication sharedApplication].delegate;
+}
