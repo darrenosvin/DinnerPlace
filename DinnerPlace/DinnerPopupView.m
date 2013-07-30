@@ -17,7 +17,7 @@
     
     float labelMaxHeight = self.commentsView.frame.size.height/array.count;
 
-    self.commentsView.backgroundColor = [UIColor colorWithRed:0.5000 green:0.5000 blue:0.5000 alpha:0.4];
+    self.commentsView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
 
     for (int i=0; i<array.count; i++) {
 
@@ -25,11 +25,9 @@
 
         NSLog(@"Dict = %@ ",dict);
 
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0,labelMaxHeight*i+0.5, self.commentsView.frame.size.width, labelMaxHeight)];
-        label.backgroundColor = [UIColor clearColor];
-        label.layer.borderColor = [UIColor whiteColor].CGColor;
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(2,2+labelMaxHeight*i+(0.0*i), self.commentsView.frame.size.width-4, labelMaxHeight-4)];
+        label.backgroundColor = [UIColor colorWithRed:0.5000 green:0.5000 blue:0.5000 alpha:0.4];
         label.textColor = [UIColor whiteColor];
-        label.layer.borderWidth = 2.0;
         label.textAlignment = 0;
         label.numberOfLines = 3;
         label.font = [UIFont fontWithName:@"arial" size:12];
@@ -47,18 +45,17 @@
     
     float labelMaxHeight = self.addressView.frame.size.height/2;
 
-    self.addressView.backgroundColor = [UIColor colorWithRed:0.5000 green:0.5000 blue:0.5000 alpha:0.4];
+    self.addressView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
 
     for (int i=0; i<2; i++) {
 
         NSLog(@" = %@  = %@ ",self.address2,self.address1);
 
 
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0,labelMaxHeight*i+0.5, self.addressView.frame.size.width, labelMaxHeight)];
-        label.backgroundColor = [UIColor clearColor];
-        label.layer.borderColor = [UIColor whiteColor].CGColor;
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(2,2+labelMaxHeight*i+(0.0*i), self.addressView.frame.size.width-4, labelMaxHeight-4)];
+        
+        label.backgroundColor = [UIColor colorWithRed:0.5000 green:0.5000 blue:0.5000 alpha:0.4];;
         label.textColor = [UIColor whiteColor];
-        label.layer.borderWidth = 2.0;
         label.textAlignment = 0;
         label.numberOfLines = 3;
         
@@ -113,13 +110,16 @@
         }
         
         UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(90, y, 155, 80)];
-        label.backgroundColor=[UIColor whiteColor];
+        label.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.1];//[UIColor colorWithRed:0.5000 green:0.5000 blue:0.5000 alpha:0.4];
         label.textAlignment=1;
         label.text=@"Profile";
         label.lineBreakMode=NSLineBreakByClipping;
         label.numberOfLines=5;
         label.font=[UIFont fontWithName:@"Arial" size:14];
-        label.textColor=[UIColor blackColor];
+        [label setTextColor:[UIColor whiteColor]];
+        label.layer.shadowColor = [UIColor blackColor].CGColor;
+        label.layer.shadowOffset = CGSizeMake(5.5, 5.0);
+        label.layer.shadowOpacity = 1.0;
          self.title = label;
         [self addSubview:self.title];
         [label release];
@@ -158,7 +158,7 @@
         
         y = btnRoute.frame.origin.y+35+5;
 
-        float height = self.frame.size.height - y -5;
+        float height = self.frame.size.height - y -9;
         UIView *viewComment=[[UIView alloc]initWithFrame:CGRectMake(5, y, 240, height)];
         viewComment.backgroundColor=[UIColor whiteColor];
         self.commentsView = viewComment;
@@ -170,41 +170,16 @@
     return self;
 }
 
-
+#pragma mark - Action
 -(void)clickOnTitle:(id)sender {
 
-    NSLog(@"clickOnTitle");
     [self.delegate dinnerPlace:self];
-    
 }
 
--(void)btnClicked:(id)sender
-{
+-(void)btnClicked:(id)sender {
 
+    
     [self.delegate showRoot:self];
-    return;
-    
-  /*  MapView* mapView = [[[MapView alloc] initWithFrame:
-						 CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)] autorelease];
-	
-	[self addSubview:mapView];
-    
-    
-    Place* home = [[[Place alloc] init] autorelease];
-	home.name = @"Home";
-	home.description = @"Sweet home";
-	home.latitude = 30.7363236;
-	home.longitude = 76.7350951;
-	
-	Place* office = [[[Place alloc] init] autorelease];
-	office.name = @"Office";
-	office.description = @"Bad office";
-	office.latitude = 30.7281532;
-	office.longitude = 76.7669532;
-	
-	[mapView showRouteFrom:home to:office];*/
-
-
     
 }
 

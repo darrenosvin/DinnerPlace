@@ -19,8 +19,7 @@
 
 //AIzaSyDZs3QGSRgvNAK38qJ9WefY-QT-wX2Adzw
 
-@interface PlacesListViewController ()
-{
+@interface PlacesListViewController () {
     
     NSMutableArray *array1;
 }
@@ -30,21 +29,10 @@
 @implementation PlacesListViewController
 
 
+#pragma mark -  TableView
 
--(id)initWitharray:(NSMutableArray *)arrayD
-{
-    self = [super init];
-    
-    if (self) {
+#pragma mark tableView_delegate&dataSource
 
-        array1 = arrayD;
-        
-    }
-    
-    return self;
-}
-
-#pragma mar TAbleview
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
     return 1;
@@ -170,6 +158,7 @@
     
 }
 
+#pragma mark  - ViewLifeCycle.
 
 #pragma mark Back.
 -(void)back:(id)sender {
@@ -177,7 +166,18 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark ViewLifeCycle.
+-(id)initWitharray:(NSMutableArray *)arrayD{
+
+    self = [super init];
+    if (self) {
+        // Custom initialization
+
+        array1 = [arrayD retain];
+    }
+    return self;
+
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

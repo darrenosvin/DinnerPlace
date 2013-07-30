@@ -24,6 +24,6 @@
 @property (nonatomic, strong) NSString   *subThoroughfare;
 @property (nonatomic, strong) CLLocation *currentLocation;
 
--(void)updateLocation:(CLLocation *)location;
+//-(void)updateLocation:(CLLocation *)location;
 
 @end

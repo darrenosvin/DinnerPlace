@@ -17,16 +17,17 @@
 @property (nonatomic, retain) id <DinnerPopupViewDelegate> delegate;
 
 @property (nonatomic, retain) AsyncImageView *imageView;
+
 @property (nonatomic, retain) UILabel     *title;
 @property (nonatomic, retain) UIView      *addressView;
 @property (nonatomic, retain) NSString    *address1;
 @property (nonatomic, retain) NSString    *address2;
 @property (nonatomic, retain) UIButton    *btnRute;
-@property (nonatomic, retain) UIView     *commentsView;
-//@property (nonatomic, assign) NSInteger tag;
+@property (nonatomic, retain) UIView      *commentsView;
 
 -(void)showComments:(NSArray *)array;
 -(void)showAddress;
+
 @end
 
 @protocol DinnerPopupViewDelegate <NSObject>

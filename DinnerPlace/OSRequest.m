@@ -19,15 +19,20 @@
         return;
     }
 
+
+
     NSString *strURL = [kPreURL stringByAppendingString:apiURL];
               strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL    *URL    = [NSURL URLWithString:strURL];
 
     NSLog(@"%@",strURL);
 
+
+
     NSURLCacheStoragePolicy policy   = NSURLCacheStorageNotAllowed;
     NSURLRequest           *request2 = [NSURLRequest requestWithURL:URL cachePolicy:policy timeoutInterval:60.0];
 
+    //StartIndicatorView.
     [appDelegate() startIndicatorView];
 
     if (isAsync) {
@@ -37,12 +42,7 @@
     [NSURLConnection sendAsynchronousRequest:request2 queue:queue completionHandler:^(NSURLResponse* response, id data, NSError* error) {
 
 
-        NSLog(@"error==  %@",error);
-
         if (error) {
-
-            
-            NSLog(@"error==  %@",error);
 
             [appDelegate() requestFaield:error];
             return;
@@ -53,16 +53,22 @@
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                              options:kNilOptions
                                                                error:&jsonError];
+
+        NSLog(@"%@",json);
+
+        
         if (json) {
 
-            NSLog(@"json==  %@ %@",json,jsonError);
+            //CallBack
             handler(json,jsonError);
             
         }else {
-            NSLog(@"json==  %@",jsonError);
+            
+            //CallBack
             handler(nil,jsonError);
         }
 
+        //StopIndicatorView...
         [appDelegate() stopIndicatorView];
         
     }];
@@ -71,6 +77,8 @@
         
 
     }else {
+
+    //************************************************* SynchronousRequest ****************************************************************
 
         NSError *requestError;
         NSURLResponse *urlResponse = nil;

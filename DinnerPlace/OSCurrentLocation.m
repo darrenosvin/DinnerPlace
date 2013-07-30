@@ -18,7 +18,7 @@ static OSCurrentLocation *sharedMyManager = nil;
 @synthesize place;
 
 
-#pragma mark Singleton Methods
+#pragma mark - Singleton Methods
 
 
 + (id)sharedInstance {
@@ -69,6 +69,22 @@ static OSCurrentLocation *sharedMyManager = nil;
     [super dealloc];
 }
 
+#pragma mark - Location Service Status.
+
+-(CLAuthorizationStatus )locationAuthorizationStatus {
+
+    return [CLLocationManager authorizationStatus];
+}
+
+-(BOOL)locationServiceOn {
+
+    return  [CLLocationManager locationServicesEnabled];
+}
+
+
+
+#pragma mark - Location Updating.
+
 -(void)startUpdatingCurrentLocation {
 
     if (!locationManager) {
@@ -94,11 +110,10 @@ static OSCurrentLocation *sharedMyManager = nil;
     
 }
 
+#pragma mark - CLLocationManager_Delegate
+
+
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-
-
-    
-    NSLog(@"%@",error);
 
 
 }
@@ -170,18 +185,6 @@ static OSCurrentLocation *sharedMyManager = nil;
     
 }
 
-
--(CLAuthorizationStatus )locationAuthorizationStatus {
-
-    NSLog(@"CLLocationManager11 %i",[CLLocationManager authorizationStatus]);
-    
-   return [CLLocationManager authorizationStatus];
-}
-
--(BOOL)locationServiceOn {
-    
-    return  [CLLocationManager locationServicesEnabled];
-}
 
 @end
 

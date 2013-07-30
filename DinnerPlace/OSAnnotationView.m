@@ -14,15 +14,11 @@
 
 -(void)nothingYaar{
     
-    NSLog(@"nothingYR");
-    
     self.callback(self,nil);
-    
 }
 
 -(void)tapOnanotaion{
     
-    NSLog(@"tapOnanotaion..");
     self.callback(self,nil);
 
 }
@@ -46,7 +42,7 @@
     //super.animatesDrop = YES;
     self.frame = CGRectMake(0, 0, 50, 50);
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"ball-red.png"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"6.png"] forState:UIControlStateNormal];
     btn.frame =CGRectMake(0, 0, 20, 20);
     [btn addTarget:self action:@selector(nothingYaar) forControlEvents:UIControlEventTouchUpInside];
     

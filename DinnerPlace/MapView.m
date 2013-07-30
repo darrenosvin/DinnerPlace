@@ -102,7 +102,22 @@
 	NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
 	NSLog(@"api url: %@", apiUrl);
 	NSString *apiResponse = [NSString stringWithContentsOfURL:apiUrl];
+
 	NSString* encodedPoints = [apiResponse stringByMatching:@"points:\\\"([^\\\"]*)\\\"" capture:1L];
+
+    NSLog(@"encodedPoints = %@",encodedPoints);
+
+    if (!encodedPoints || [encodedPoints isKindOfClass:NULL]) {
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Route not found!" message:@"May be you are out of Demark." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+
+        });
+        return nil;
+    }
+
 	return [self decodePolyLine:[encodedPoints mutableCopy]];
     
 }
@@ -149,11 +164,39 @@
 	
 	[mapView addAnnotation:from];
 	[mapView addAnnotation:to];
-	
-	routes = [[self calculateRoutesFrom:from.coordinate to:to.coordinate] retain];
-	
-	[self updateRouteView];
-	[self centerMap];
+
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+
+        routes = [[self calculateRoutesFrom:from.coordinate to:to.coordinate] retain];
+
+        if (!routes || [routes isKindOfClass:[NSNull class]]) {
+
+            return ;
+        }
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            // Alsways perform such code on the main queue/thread
+            [self updateRouteView];
+            [self centerMap];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+        });
+
+        
+    });
+    
+    
+//	routes = [[self calculateRoutesFrom:from.coordinate to:to.coordinate] retain];
+//	
+//	[self updateRouteView];
+//	[self centerMap];
+
+    
 }
 
 -(void) updateRouteView {

@@ -22,6 +22,9 @@
 
 @implementation RouteViewController
 
+
+#pragma mark - RoutMapSetup...
+
 -(void)showRout {
     
     MapView* mapView = [[[MapView alloc] initWithFrame:
@@ -49,11 +52,7 @@
     float pLat = [[dictionayr objectForKey:@"Latitude"]floatValue];
     float pLng = [[dictionayr objectForKey:@"Longitude"]floatValue];
 
-    // mapView.showsUserLocation = YES;
-
-    NSLog(@"c %f c  %f plt %f pln %f",cuLat,cuLng,pLat,pLng);
-
-    NSString *currentCountry = OSLocation().place.country;
+    NSString *currentCountry = @"Current Location";
     NSString *currentArea    = OSLocation().place.administrativeArea;
 
     Place* home = [[[Place alloc] init] autorelease];
@@ -75,7 +74,9 @@
     
 }
 
--(void)back{
+#pragma mark - ViewLifeCycle.
+
+-(void)back { 
 
     [self.navigationController popViewControllerAnimated:YES];
 }

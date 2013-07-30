@@ -54,8 +54,8 @@
     self.userImgURL  = [decoder decodeObjectForKey:@"userImgURL"];
     self.userGender  = [decoder decodeObjectForKey:@"userGender"];
     self.userEmail   = [decoder decodeObjectForKey:@"userEmail"];
-
     return self;
+    
 }
 
 -(void)dealloc {
@@ -68,7 +68,6 @@
     [userGender release];
     [userFBId   release];
     [userImgURL release];
-    
     
 }
 @end

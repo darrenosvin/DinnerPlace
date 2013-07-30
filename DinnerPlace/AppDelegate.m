@@ -29,10 +29,12 @@
 @synthesize session = _session;
 @synthesize indicatorView = _indicatorView;
 
+
+#pragma mark -   Facebook
+
 -(void)setFbLogin:(BOOL)fbLogin_ {
 
     //self.fbLogin = fbLogin_;
-
     fbLogin = fbLogin_;
 
     [[NSUserDefaults standardUserDefaults]setBool:fbLogin_ forKey:fbIsLogin];
@@ -40,6 +42,7 @@
     
 }
 
+//SaveProfile...
 -(void)setUserProfile:(UserProfile *)userProfile_{
 
     if (self.userProfile != userProfile_) {
@@ -52,6 +55,8 @@
     }
 }
 
+
+//NetworkReachabilityNotification
 -(void)applicationNetworkReachability {
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNetworkStatus) name:FXReachabilityStatusDidChangeNotification object:nil];
@@ -60,31 +65,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+//    NSString *path = @"/Applications/Cydia.app";
+//    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+//
+//    if (fileExists) {
+//        //device is jailbroken
+//        NSLog(@"device is jailbroken");
+//    } else {
+//        NSLog(@"device is not jailbroken");
+//
+//    }
 
 
-    NSString *path = @"/Applications/Cydia.app";
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
-
-    if (fileExists) {
-        //device is jailbroken
-        NSLog(@"device is jailbroken");
-    } else {
-        NSLog(@"device is not jailbroken");
-
-    }
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
 
     self.fbLogin = [[NSUserDefaults standardUserDefaults]boolForKey:fbIsLogin];
 
     if (self.fbLogin) {
-
-        NSData *data =  [[NSUserDefaults standardUserDefaults]objectForKey:fbProfile];
+        
+        NSData *data =     [[NSUserDefaults standardUserDefaults]objectForKey:fbProfile];
         self.userProfile = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
     }
-
-    NSLog(@"fbLogin = %i",self.fbLogin);
 
     RootViewController *rootViewController = [[RootViewController alloc]init];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:rootViewController];
@@ -142,7 +144,6 @@
     // attempt to extract a token from the url
     return [self.session handleOpenURL:url];
 }
-
 
 
 - (void)saveContext

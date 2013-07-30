@@ -11,4 +11,5 @@
 @property (nonatomic, assign) NSDictionary *dictionary;
 
 -(id)initWithDict:(NSDictionary *)dict;
+
 @end

@@ -23,11 +23,10 @@
 
 @interface UserProfile : NSObject <NSCoding>
 
-
 @property (nonatomic, strong) UserName *userName;
+
 @property (nonatomic, strong) NSString *firstName_;
 @property (nonatomic, strong) NSString *lastName_;
-
 @property (nonatomic, strong) NSString *userDOB;
 @property (nonatomic, strong) NSString *userFBId;
 @property (nonatomic, strong) NSString *userImgURL;

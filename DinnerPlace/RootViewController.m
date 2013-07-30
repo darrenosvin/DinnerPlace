@@ -8,7 +8,6 @@
 
 #import "RootViewController.h"
 #import "CreateNewPlaceViewController.h"
-#import "CreateNewPlaceView.h"
 
 #import "OSAlertView.h"
 
@@ -20,20 +19,13 @@
 @synthesize mainViewController = _mainViewController;
 
 
+#pragma mark - LoginButtonClicked
 
--(void)LoginSuccess:(id)sender {
+-(void)LoginBtnClicked:(id)sender {
 
 //------------
 
-     NSLog(@"%i",[FXReachability isReachable]);
-
     if ([sender tag]) {
-
-//        CreateNewPlaceViewController   *temp = [[CreateNewPlaceViewController alloc]init];
-//        [self.navigationController pushViewController:temp animated:YES];
-//        [temp release];
-//
-//        return;
 
          MainViewController  *mainViewController = [[MainViewController alloc]init];
          self.mainViewController = mainViewController;
@@ -41,13 +33,14 @@
          [mainViewController release];
 
     }else {
+        
         [self facebookLogin];
     }
    
     
 }
 
-
+#pragma mark - MainViewController
 -(void)appSuccessfullyLogin {
 
     MainViewController  *mainViewController = [[MainViewController alloc]init];
@@ -57,6 +50,8 @@
 
 }
 
+#pragma mark - Facebook. 
+
 //LOgin user profile.........
 - (void)populateUserDetails
 {
@@ -65,6 +60,7 @@
           [FBSession setActiveSession:appDelegate().session];
 
     if (appDelegate().fbLogin) {
+        
         [self appSuccessfullyLogin];
         [appDelegate() stopIndicatorView];
         return ;
@@ -226,13 +222,17 @@
 
 }
 
-#pragma mark ViewLifeCycle
+#pragma mark -  ViewLifeCycle
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+    
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+
     if (self) {
         // Custom initialization
     }
+    
     return self;
 }
 
@@ -240,7 +240,6 @@
 
     [OSLocation() startUpdatingCurrentLocation];
 
-   
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -250,9 +249,6 @@
     [OSLocation() startUpdatingCurrentLocation];
 
      if (!appDelegate().session.isOpen) {
-
-       //  [self facebookLogin];
-
 
      }
 
@@ -267,64 +263,27 @@
 
 
     float viewCenter =self.view.center.y;
-    //236x80
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     btn.frame = CGRectMake(320/2-236/2, viewCenter-160, 236, 80);
     btn.tag = 0;
     [btn setBackgroundImage:[UIImage imageNamed:@"LoginButton.png"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(LoginSuccess:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(LoginBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:@"Facebook" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn.titleLabel setFont:[UIFont fontWithName:@"arial" size:35]];
     [self.view addSubview:btn];
 
-   // self.view.autoresizesSubviews = YES;
-
     UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn2.frame = CGRectOffset(btn.frame, 0, 150);
     btn2.tag =1;
     [btn2 setBackgroundImage:[UIImage imageNamed:@"LoginButton.png"] forState:UIControlStateNormal];
-    [btn2 addTarget:self action:@selector(LoginSuccess:) forControlEvents:UIControlEventTouchUpInside];
+    [btn2 addTarget:self action:@selector(LoginBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn2];
     [btn2 setTitle:@"Facebook In" forState:UIControlStateNormal];
     [btn2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn2.titleLabel setFont:[UIFont fontWithName:@"arial" size:35]];
+    btn2.enabled = NO;
 
-//    btn2.autoresizingMask = UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight;
-
-    UILabel *label = [self createLabel];
-    [self.view addSubview:label];
-    
-    [self createLabelConstrants:label];
-
-	// Do any additional setup after loading the view.
-}
-
-- (UILabel*)createLabel {
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(320/2-150/2,200, 50, 150)];
-    [label setTranslatesAutoresizingMaskIntoConstraints:NO];
-    label.text = @"I am centered!";
-    label.backgroundColor = [UIColor yellowColor];
-    return label;
-}
-
-- (void)createLabelConstrants:(UILabel*)label {
-    
-    UIView *superview = self.view;
-    NSDictionary *variables = NSDictionaryOfVariableBindings(label, superview);
-    NSArray *constraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[superview]-(<=1)-[label]"
-                                            options: NSLayoutFormatAlignAllCenterX
-                                            metrics:nil
-                                              views:variables];
-    [self.view addConstraints:constraints];
-
-    constraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[superview]-(<=1)-[label]"
-                                            options: NSLayoutFormatAlignAllCenterY
-                                            metrics:nil
-                                              views:variables];
-    [self.view addConstraints:constraints];
 }
 
 

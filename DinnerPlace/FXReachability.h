@@ -9,8 +9,6 @@
 //  Distributed under the permissive zlib License
 //  Get the latest version from here:
 //
-//  https://github.com/nicklockwood/FXReachability
-//
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
 //  arising from the use of this software.
@@ -33,10 +31,8 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
-
 extern NSString *const FXReachabilityStatusDidChangeNotification;
 extern NSString *const FXReachabilityNotificationStatusKey;
-
 
 typedef enum
 {

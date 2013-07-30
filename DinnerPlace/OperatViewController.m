@@ -76,7 +76,7 @@
     topView.layer.shadowOpacity = 0.9f;
 
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(70, 0, 320-70-65, 40)];
-    label.text = @"O";
+    label.text = @"Create/Edit";
     [label setBackgroundColor:[UIColor clearColor]];
     [label setTextAlignment:1];
     [label setTextColor:[UIColor whiteColor]];

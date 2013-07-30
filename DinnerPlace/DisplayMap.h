@@ -25,13 +25,13 @@
 }
 
 @property (nonatomic, assign)  CLLocationCoordinate2D coordinate; 
-@property (nonatomic, copy)    NSString *title;
-@property (nonatomic, copy)    NSString *subtitle;
-@property (nonatomic, copy)    NSString *address;
-@property (nonatomic, copy)    NSString *notes;
-@property (nonatomic, copy)    NSString *placeID;
-@property (nonatomic, retain)  UIColor *color;
-@property (nonatomic, assign)    NSInteger tag;
+@property (nonatomic, copy)    NSString  *title;
+@property (nonatomic, copy)    NSString  *subtitle;
+@property (nonatomic, copy)    NSString  *address;
+@property (nonatomic, copy)    NSString  *notes;
+@property (nonatomic, copy)    NSString  *placeID;
+@property (nonatomic, retain)  UIColor   *color;
+@property (nonatomic, assign)  NSInteger tag;
 
 
 @end

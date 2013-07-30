@@ -78,7 +78,6 @@
     
     }
 
-
             ensureInMainThread();
             self.indicatorView.hidden = NO;
             self.window.userInteractionEnabled = NO;

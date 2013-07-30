@@ -8,7 +8,10 @@
 
 //typedef void(^BottomBack)(NSInteger status,BOOL free);
 
+#pragma mark - BottomView
+
 @protocol BottomViewDelegate;
+
 
 @interface BottomView : UIView
 {
@@ -37,12 +40,10 @@
     NSInteger tag = [sender tag];
     [self.delegate bottomView:self btnClicked:sender index:tag];
     
-    NSLog(@"=== bottom tag %i",tag);
-    
 }
+
 //--
 
-#pragma mark ViewLifeCycle...
 
 -(id)initWithFrame:(CGRect)rect {
     
@@ -62,7 +63,7 @@
             //236x80
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.frame = CGRectOffset(rect, (i*btnWidth)+(i*2), 0);
-            btn.tag = i;
+            btn.tag = 10+i;
             [btn setBackgroundImage:[UIImage imageNamed:[arraybutton objectAtIndex:i]] forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(bottomBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
           //  rect = btn.frame;
@@ -70,11 +71,11 @@
             
 
         }
-
+      
     }
 
     return self;
-    
+
 }
 
 @end
@@ -100,11 +101,22 @@
 #import "MapView.h"
 #import "RegexKitLite.h"
 
+
+#define serchingByprice @"price" 
+#define serchingByTags @"tags"
+#define serchingByGener @"genre"
+
+#pragma mark - MainViewcontroller
+
 @interface MainViewController ()<BottomViewDelegate,DinnerPopupViewDelegate>
 {
     CLLocationManager *locationManager;
     CLLocation *locationC;
     MKPolyline *  routeLine;
+  
+    UITextField *textFieldAccoryView,*textFieldBottom;
+
+    NSInteger searchType;
 }
 
 
@@ -116,11 +128,14 @@
 @synthesize pinAnnotationView;
 
 
+#pragma mark -   MAP
 
 #pragma mark Show location on map
 
 -(void)showLocationOnMap {
-    
+
+    [mapView removeAnnotations:mapView.annotations];
+
     for (NSDictionary *dict in self.arrayPlaces)  {
 
 
@@ -147,10 +162,10 @@
             continue;
         }
 
-        region.span.longitudeDelta = 0.2f;
-        region.span.latitudeDelta = 0.2f;
+        region.span.longitudeDelta = 0.02f;
+        region.span.latitudeDelta = 0.02f;
         [mapView setRegion:region animated:YES];
-       
+        
 //        MKCoordinateSpan span;
 //        span.latitudeDelta = 0.2;
 //        span.longitudeDelta = 0.2;
@@ -160,7 +175,7 @@
 //        location.longitude=[[dict objectForKey:@"Longitude"]doubleValue];//76.7350951;
 //        region.span=span;
 //        region.center=location;
-
+        
         //NSLog(@"====== LOcation Found %f %f",location.latitude,location.longitude);
 
         DinnerPlace *dinnerPlace = [[DinnerPlace alloc] init];
@@ -175,14 +190,13 @@
         [mapView addAnnotation:dinnerPlace];
 
         //----------------- pin Color-----------------------
-        UIImage * image =[UIImage imageNamed:@"6.png"];//[UIImage imageNamed:[NSString stringWithFormat:@"%i.png",i+1]];//
+        UIImage * image =[UIImage imageNamed:@"6.png"]; //[UIImage imageNamed:[NSString stringWithFormat:@"%i.png",i+1]];//
         UIImageView *imageView = [[[UIImageView alloc] initWithImage:image]
                                   autorelease];
         [pinAnnotationView addSubview:imageView];
         i++;
                 
     }
-    
     
 }
 
@@ -220,7 +234,7 @@
             return nil;
         }
         else {
-                  
+            
             static NSString *defaultPinID = @"com.invasivecode.pin";
             
 //            pinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
@@ -271,20 +285,17 @@
                     
                     dispatch_sync(dispatch_get_main_queue(), ^{
 
+                        [textFieldAccoryView resignFirstResponder];
+                        [textFieldBottom resignFirstResponder];
+
                         [dinnerPlace showComments:array];
                         [dinnerPlace showAddress];
-
                         [blurModal show];
-
-                        
 
                     });//end block
                     
                 }];
-                
-
-                
-            };
+        };
            
             return view;
             
@@ -292,7 +303,6 @@
 //            //pinView.canShowCallout = YES;
 //            [pinAnnotationView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeInfoDark]];
 //            return pinAnnotationView;
-
             
         }
 }
@@ -310,24 +320,62 @@
 
 
 
-#pragma mark Bottom_Buttons_Delegate....
+#pragma mark - Bottom_Buttons_Delegate....
 
--(void)bottomView:(id)view btnClicked:(UIButton *)btn index:(NSInteger)tag{
+-(void)bottomView:(UIView *)view btnClicked:(UIButton *)btn index:(NSInteger)tag{
 
-    if (tag == 0) {
+    if (tag == 10) {
 
-    }else if (tag ==1){
+        searchType = 0;
 
-    }else if (tag == 2){
-        
+        textFieldBottom.placeholder = serchingByGener;
+        textFieldAccoryView.keyboardType = UIKeyboardTypeDefault;
+
+
+        btn.selected = YES;
+        [(UIButton *)[view viewWithTag:11] setSelected:NO];
+        [(UIButton *)[view viewWithTag:12] setSelected:NO];
+
+    }else if (tag ==11){
+
+        searchType = 1;
+
+        textFieldBottom.placeholder = serchingByprice;
+
+
+        btn.selected = YES;
+        [(UIButton *)[view viewWithTag:10] setSelected:NO];
+        [(UIButton *)[view viewWithTag:12] setSelected:NO];
+        textFieldAccoryView.keyboardType = UIKeyboardTypeNamePhonePad;
+
+
+    }else if (tag == 12){
+
+        textFieldBottom.placeholder = serchingByTags;
+
+        searchType = 2;
+
+        textFieldAccoryView.keyboardType = UIKeyboardTypeDefault;
+
+
+        btn.selected = YES;
+        [(UIButton *)[view viewWithTag:10] setSelected:NO];
+        [(UIButton *)[view viewWithTag:11] setSelected:NO];
     }
 
 }
 
+
+#pragma mark - Top Buttons Operation
+
 -(void)dinnerPlace:(DinnerPopupView *)view  {
 
+    [textFieldAccoryView resignFirstResponder];
+    [textFieldBottom resignFirstResponder];
+
+
     NSDictionary *dictPlace;
-    
+
     for (NSDictionary *dict in self.arrayPlaces) {
 
 
@@ -336,41 +384,43 @@
             dictPlace = dict;
             break;
         }
-        
+
     }
 
     PlaceDetailViewController *placeDetailViewController = [[PlaceDetailViewController alloc]initWithDict:dictPlace];
     [self.navigationController pushViewController:placeDetailViewController animated:YES];
     [placeDetailViewController release];
-    
+
 }
 
--(void)showRoot:(DinnerPopupView *)view{
+-(void)showRoot:(DinnerPopupView *)view {
+
+    [textFieldAccoryView resignFirstResponder];
+    [textFieldBottom resignFirstResponder];
 
     NSDictionary *dictPlace;
 
     for (NSDictionary *dict in self.arrayPlaces) {
-
 
         if ([[dict objectForKey:@"PlaceID"]integerValue] == view.tag) {
 
             dictPlace = dict;
             break;
         }
-        
-    }
 
+    }
 
     RouteViewController *routViewController = [[RouteViewController alloc]initWithDict:dictPlace];
     [self.navigationController pushViewController:routViewController animated:YES];
     [routViewController release];
-
+    
 }
-
-#pragma mark TopButtonOperation
 
 
 -(void)topButtonClicked:(id)sender{
+
+    [textFieldAccoryView resignFirstResponder];
+    [textFieldBottom resignFirstResponder];
 
     if (![sender tag]) {
         OperatViewController *operatViewController = [[OperatViewController alloc]init];
@@ -387,14 +437,111 @@
     
 }
 
+#pragma mark  -  TextFieldAccessoryView -- 
 
-#pragma mark touchcontroll
+-(void)searchBtnClicked {
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSString *searchText = textFieldAccoryView.text;
+
+    if (!searchText || [searchText empty]) {
+
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Searching!" message:@"Please enter search data" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+
+    NSString *strURL = [NSString stringWithFormat:@"GetSearchResult?Search=%@",searchText];
+
+    [OSRequest sendAsyncReque:YES url:strURL completionHandle:^(id data,NSError *error){
+
+        NSArray *array = [data objectForKey:@"SearchPlaceResult"];
+
+        if (array.count) {
+
+            self.arrayPlaces = [[NSMutableArray alloc]initWithArray:array];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+                if (!self.arrayPlaces.count) {
+
+                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Not found!" message:@"search with different data." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                    [alertView show];
+                    return ;
+                    
+                }
+
+                [self showLocationOnMap];
+                [textFieldAccoryView resignFirstResponder];
+            });
+
+            //  [self performSelectorOnMainThread:@selector(showLocationOnMap) withObject:nil waitUntilDone:YES];
+
+        }
+
+    }];
+
+
 
 }
 
-#pragma mark ViewLifeCycle....
+-(void)cancelBtnClicked{
+
+    [textFieldAccoryView resignFirstResponder];
+    [textFieldBottom resignFirstResponder];
+}
+
+#pragma mark - TextFieldDelegate..
+
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+
+    if (textFieldBottom == textField) {
+
+        textFieldAccoryView.placeholder = textFieldBottom.placeholder;
+ 
+    }
+    
+}
+
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+
+    
+    return YES;
+
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+
+    [textFieldAccoryView resignFirstResponder];
+    [textFieldBottom resignFirstResponder];
+
+    if (textFieldAccoryView == textField) {
+
+
+    }
+
+    
+    return YES;
+}
+
+#pragma mark - KeyBoarNotifications
+-(void)keyBoardDidShow:(NSNotification *)notification{
+
+    [textFieldAccoryView becomeFirstResponder];
+}
+
+
+-(void)keyBoardWillShow:(NSNotification *)notification {
+
+}
+
+-(void)keyBoardWillHide:(NSNotification *)notification {
+
+}
+
+#pragma mark - ViewLifeCycle....
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -408,11 +555,24 @@
 }
 
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+
+}
 
 -(void)viewWillAppear:(BOOL)animated{
 
     [super viewWillAppear:animated];
-    
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+
 }
 
 - (void)viewDidLoad {
@@ -458,6 +618,8 @@
     [btn setTitleEdgeInsets:UIEdgeInsetsMake(2.0f, 15.0f, 0.0f, 0.0f)];
     [self.view addSubview:btn];
 
+//http://clientdemo.osvin.biz/FindDinnerPlaceapi/FDinnerApi.svc/GetSearchResult?Search=sql,,
+
 
     //GetAllDinnerPlace......
      NSString *strURL = @"GetDinnerPlace";
@@ -465,6 +627,8 @@
     [OSRequest sendAsyncReque:YES url:strURL completionHandle:^(id data,NSError *error){
         
         NSArray *array = [data objectForKey:@"GetDinnerPlaceResult"];
+
+        NSLog(@"array.coun = %i",array.count);
 
         if (array.count) {
 
@@ -475,7 +639,54 @@
         
     }];
 
+//    CGRect rectView =   [self.superview convertRect:self.frame toView:self.superview];
+//    NSLog(@"rectView = %@",NSStringFromCGRect(rectView));
+
+    UIView *accessoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    accessoryView.backgroundColor = [UIColor colorWithRed:0.2601 green:0.2530 blue:0.2532 alpha:0.4];
+
+    textFieldBottom = [[UITextField alloc]initWithFrame:CGRectMake(320-140, bottomView.frame.origin.y-30, 140, 30)];
+    textFieldBottom.borderStyle = UITextBorderStyleRoundedRect;
+    textFieldBottom.delegate = self;
+    textFieldBottom.placeholder = serchingByprice;
+    [textFieldBottom setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    [self.view addSubview:textFieldBottom];
+
+    UIButton *Cancel  = [UIButton buttonWithType:UIButtonTypeCustom];
+    Cancel.frame = CGRectMake(0, 0, 70, 30);
+   // [Cancel setTitle:@"Cancel" forState:UIControlStateNormal];
+    [Cancel setBackgroundImage:[UIImage imageNamed:@"cancelBtn.png"] forState:UIControlStateNormal];
+    [Cancel addTarget:self action:@selector(cancelBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [accessoryView addSubview:Cancel];
+
+     UIButton *btn2  = [UIButton buttonWithType:UIButtonTypeCustom];
+     btn2.frame = CGRectMake(320-70, 0, 70, 30);
+   // [btn2 setTitle:@"Search" forState:UIControlStateNormal];
+    [btn2 setBackgroundImage:[UIImage imageNamed:@"searchBtn.png"] forState:UIControlStateNormal];
+    [btn2 addTarget:self action:@selector(searchBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [accessoryView addSubview:btn2];
+
+    //---
+    textFieldAccoryView = [[UITextField alloc]initWithFrame:CGRectMake(70,0, 320-140, 30)];
+    textFieldAccoryView.borderStyle = UITextBorderStyleNone;
+    textFieldAccoryView.delegate = self;
+    textFieldAccoryView.textAlignment = 1;
+    textFieldAccoryView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"text-small.png"]];
+    textFieldAccoryView.textColor = [UIColor whiteColor];
+    textFieldAccoryView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    textFieldAccoryView.autocorrectionType = UITextAutocorrectionTypeNo;
+    textFieldAccoryView.returnKeyType = UIReturnKeyDone;
+    [textFieldAccoryView setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    [textFieldAccoryView setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [accessoryView addSubview:textFieldAccoryView];
+    textFieldBottom.inputAccessoryView = accessoryView;
+    
+    textFieldAccoryView.keyboardType = UIKeyboardTypeNamePhonePad;
+    textFieldAccoryView.placeholder = serchingByprice;
+    searchType = 1;
+    
 	// Do any additional setup after loading the view.
+
 }
 
 

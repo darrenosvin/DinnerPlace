@@ -11,7 +11,7 @@
 #import "OSAlertView.h"
 #import "RNBlurModalView.h"
 #import "WebViewController.h"
-
+#import "MapViewController.h"
 
 static inline NSRegularExpression * NameRegularExpression() {
     static NSRegularExpression *_nameRegularExpression = nil;
@@ -33,6 +33,7 @@ static inline NSRegularExpression * NameRegularExpression() {
     UILabel *labelCounter;
     UIButton *btnSaveRating;
     RNBlurModalView *blurModal;
+    NSDictionary *dictData;
 }
 @end
 
@@ -40,7 +41,27 @@ static inline NSRegularExpression * NameRegularExpression() {
 @synthesize place;
 @synthesize arrayComments;
 
-#pragma mar TAbleview
+#pragma mark Comment Section
+
+#pragma mark - Tabel
+//Comment Section
+-(void)celllForCommentSection:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
+
+
+    NSDictionary *dict = [arrayComments objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = [dict objectForKey:@"Username"];
+
+    cell.detailTextLabel.text = [dict objectForKey:@"CommentContent"];
+    cell.detailTextLabel.numberOfLines = 0;
+    cell.detailTextLabel.textAlignment = 0;
+    cell.detailTextLabel.font = [UIFont fontWithName:@"arial" size:14];
+    cell.detailTextLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    
+}
+
+
+#pragma mark TableView_Delegatre&Datasource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
     return 2;
@@ -58,21 +79,6 @@ static inline NSRegularExpression * NameRegularExpression() {
     }
 }
 
--(void)celllForCommentSection:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
-
-
-    NSDictionary *dict = [arrayComments objectAtIndex:indexPath.row];
-
-    cell.textLabel.text = [dict objectForKey:@"Username"];
-
-    cell.detailTextLabel.text = [dict objectForKey:@"CommentContent"];
-    cell.detailTextLabel.numberOfLines = 0;
-    cell.detailTextLabel.textAlignment = 0;
-    cell.detailTextLabel.font = [UIFont fontWithName:@"arial" size:14];
-    cell.detailTextLabel.lineBreakMode = NSLineBreakByCharWrapping;
-
-}
-
 
 -(UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -85,7 +91,6 @@ static inline NSRegularExpression * NameRegularExpression() {
 
         cell =[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:IDIENTIFER];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
     }
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
@@ -100,7 +105,7 @@ static inline NSRegularExpression * NameRegularExpression() {
 
     if (indexPath.section == 0 ){ //Section 0
 
-         if ( indexPath.row == 0) {
+         if ( indexPath.row == 0) { //Title.....
 
              //CompanyName
              NSString *CompanyName = [place objectForKey:@"CompanyName"];
@@ -118,8 +123,8 @@ static inline NSRegularExpression * NameRegularExpression() {
        
          }else if (indexPath.row == 1) { //Address...
 
-            cell.textLabel.text = @"Address:"; //[place objectForKey:@"Address"];
-
+            cell.textLabel.text = @"Address:";
+             
              NSString *Address = [place objectForKey:@"Address"];
 
              if (Address && ![Address empty]) {
@@ -127,11 +132,19 @@ static inline NSRegularExpression * NameRegularExpression() {
              }else
                  cell.detailTextLabel.text = @"_";
 
-             cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+             if (!Address || [Address empty]) {
+                 cell.accessoryType = UITableViewCellAccessoryNone;
 
-        }else if ( indexPath.row == 2) {
+             }else{
+                 
+                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 
-           cell.textLabel.text = @"Rating :"; //[place objectForKey:@"Address"];
+             }
+
+
+        }else if ( indexPath.row == 2) { //Rating....
+
+           cell.textLabel.text = @"Rating :";
 
             UIButton  *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.frame = CGRectMake(320-55, 4, 50, 30);
@@ -140,13 +153,9 @@ static inline NSRegularExpression * NameRegularExpression() {
             [btn.titleLabel setFont:[UIFont fontWithName:@"arial" size:17]];
             [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
             [btn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
-            //move text 10 pixels down and right
             [btn setTitleEdgeInsets:UIEdgeInsetsMake(1.5f, 9.0f, 0.0f, 0.0f)];
             [btn addTarget:self action:@selector(rateThisPlace) forControlEvents:UIControlEventTouchUpInside];
-            //  rect = btn.frame;
             [cell.contentView addSubview:btn];
-
-               // [place objectForKey:@"Rating"];
 
             NSString *Rating = [place objectForKey:@"Rating"];
 
@@ -170,12 +179,11 @@ static inline NSRegularExpression * NameRegularExpression() {
         rateView.delegate = nil;
         [cell.contentView addSubview:rateView];
 
-            // RNBlurModalView *blurModal = [[RNBlurModalView alloc]initWithViewController:self view:dinnerPlace];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+            
+    }else if ( indexPath.row == 3) { //Price....
 
-            cell.accessoryType = UITableViewCellAccessoryNone;
-    }else if ( indexPath.row == 3) {
-
-        cell.textLabel.text = @"Price :"; //;
+        cell.textLabel.text = @"Price :"; 
         NSString *Price = [place objectForKey:@"Price"];
 
         if (Price && ![Price empty]) {
@@ -184,7 +192,8 @@ static inline NSRegularExpression * NameRegularExpression() {
             cell.detailTextLabel.text = @"$_";
 
         cell.accessoryType = UITableViewCellAccessoryNone;
-    }else if ( indexPath.row == 4) { //
+        
+    }else if ( indexPath.row == 4) { //Website
 
         cell.textLabel.text = @"Website :";
 
@@ -195,7 +204,8 @@ static inline NSRegularExpression * NameRegularExpression() {
             cell.detailTextLabel.text = @"";
 
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    }else if (indexPath.row == 5) {
+        
+    }else if (indexPath.row == 5) { //Phone number
 
         cell.textLabel.text = @"Phone :"; //
         NSString *phnNumber = [place objectForKey:@"PhoneNumber"];
@@ -204,21 +214,16 @@ static inline NSRegularExpression * NameRegularExpression() {
             cell.detailTextLabel.text = phnNumber;
         }else
             cell.detailTextLabel.text = @"";
-        
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
 
 
         
-    }else if (indexPath.section == 1) {  //Section 1
-
+    }else if (indexPath.section == 1) { // Section 1 
+         //Comments
         [self celllForCommentSection:cell indexPath:indexPath];
         
     }
-
-
-
-
 
     return cell;
 }
@@ -244,15 +249,6 @@ static inline NSRegularExpression * NameRegularExpression() {
         
     }
 }
-
-//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-//
-//    if (section == 1)
-//        return @"Comments";
-//        else{
-//            return @"";
-//        }
-//}
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
@@ -298,19 +294,15 @@ static inline NSRegularExpression * NameRegularExpression() {
             [btn.titleLabel setFont:[UIFont fontWithName:@"arial" size:17]];
             [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
             [btn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
-            //move text 10 pixels down and right
             [btn setTitleEdgeInsets:UIEdgeInsetsMake(1.5f, 9.0f, 0.0f, 0.0f)];
             [btn addTarget:self action:@selector(showCommentAlertView) forControlEvents:UIControlEventTouchUpInside];
-            //  rect = btn.frame;
             [view addSubview:btn];
 
             if (!appDelegate().fbLogin) {
                 btn.hidden = YES;
 
             }
-
         }
-        
            return view;
 
         }
@@ -333,10 +325,19 @@ static inline NSRegularExpression * NameRegularExpression() {
 
         if (indexPath.row == 1) { //Address
 
+            MapViewController *mapViewController = [[MapViewController alloc]initWithDict:place];
+            [self.navigationController pushViewController:mapViewController animated:YES];
+            [mapViewController release];
             
         }else if (indexPath.row == 4){ //WebSite...
 
             NSString *strURL = [place objectForKey:@"Website"];
+
+            if (!strURL || [strURL empty] || [strURL isKindOfClass:[NSNull class]]) {
+
+                return;
+            }
+            
             strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
             WebViewController *webViewController = [[WebViewController alloc]initWithURL:strURL];
@@ -344,35 +345,31 @@ static inline NSRegularExpression * NameRegularExpression() {
             [webViewController release];
             
         }
+        
     }
+    
 }
 
--(BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath{
 
+#pragma mark - Rating
 
-    return YES;
-}
-#pragma mark RateDelegate....
 #pragma mark RateDelegate....
 
 - (void)rateView:(RateView *)rateView ratingDidChange:(float)rating {
 
-    NSLog(@"%f",rating );
-    
     if (rating > 0.0)
         btnSaveRating.enabled = YES;
     else
         btnSaveRating.enabled = NO;
 
-    
     selectedRating = rating;
 }
 
 
 -(void)btnSaveClicked {
-    
-    [blurModal hide];
 
+    //Hide Popup.
+    [blurModal hide];
 
     //http://clientdemo.osvin.biz/FindDinnerPlaceapi//FDinnerApi.svc/PostRating?PlaceID=1&facebookID=22&Rating=5
 
@@ -383,7 +380,7 @@ static inline NSRegularExpression * NameRegularExpression() {
 
     NSString *placeId = [place objectForKey:@"PlaceID"];
     NSString *fbId    =   appDelegate().userProfile.userFBId;
-    NSString *rating  = [NSString stringWithFormat:@"%f",selectedRating];
+    NSString *rating  = [NSString stringWithFormat:@"%i",(int)selectedRating];
 
     NSString *strURL = [NSString stringWithFormat:@"PostRating?PlaceID=%@&facebookID=%@&Rating=%@",placeId,fbId,rating];
 
@@ -396,27 +393,26 @@ static inline NSRegularExpression * NameRegularExpression() {
 
         if (data) {
 
-            NSLog(@"%@",data);
             NSDictionary *dict = [data objectForKey:@"PostRatingResult"];
             NSString     *ResponseCode = [[dict objectForKey:@"ResponseCode"]stringValue];
 
             if ([ResponseCode isEqualToString:@"0"]) {
-                
+
                 OSAlertView *alert = [[[OSAlertView alloc] initWithTitle:@"Rating"
                                                                  message:@"you had already rate this place."
                                                                 delegate:nil
                                                        cancelButtonTitle:@"Dismiss"
                                                        otherButtonTitles:nil] autorelease];
-                
+
                 [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
-                
             }
             
         }
-                
+        
     }];
     
 }
+
 
 -(void)rateThisPlace {
 
@@ -425,10 +421,10 @@ static inline NSRegularExpression * NameRegularExpression() {
     rateView.notSelectedImage  =  [UIImage imageNamed:@"kermit_empty.png"];
     rateView.halfSelectedImage = [UIImage imageNamed:@"kermit_half.png"];
     rateView.fullSelectedImage = [UIImage imageNamed:@"kermit_full.png"];
-    rateView.rating = 0;
-    rateView.editable = YES;
+    rateView.rating    = 0;
+    rateView.editable  = YES;
     rateView.maxRating = 5;
-    rateView.delegate = self;
+    rateView.delegate  = self;
 
     btnSaveRating = [UIButton buttonWithType:UIButtonTypeCustom];
     btnSaveRating.frame = CGRectMake(160-61,5,56,30);
@@ -464,13 +460,12 @@ static inline NSRegularExpression * NameRegularExpression() {
     
 }
 
+#pragma mark - Comments
 
-
+#pragma mark TextViewDelegate....
 -(BOOL)textView:(UITextView *)textView_ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
 
     NSUInteger newLength = [textView_.text length] + [text length] - range.length;
-
-    NSLog(@"%i %i",newLength,25-newLength);
 
       if (newLength <= 250)
         labelCounter.text = [NSString stringWithFormat:@"%i",250-newLength];
@@ -480,23 +475,23 @@ static inline NSRegularExpression * NameRegularExpression() {
 
     }else{
         labelCounter.textColor = [UIColor whiteColor];
-
     }
 
     return (newLength > 250) ? NO : YES;
 
 }
 
-    
+#pragma mark AlertView_Delegate
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
     if (buttonIndex == 0) {
 
-        
         [self postNewComment];
     }else if (buttonIndex == 1){
         
     }
+    
 }
 
 -(void)showCommentAlertView {
@@ -508,7 +503,8 @@ static inline NSRegularExpression * NameRegularExpression() {
                                            otherButtonTitles:@"Cancel", nil] autorelease];
 
     CGRect rect2 = {12, 5, 260, 17};
-     UILabel *label = [[UILabel alloc]initWithFrame:rect2];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:rect2];
     [label setText:@"Comment"];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setFont:[UIFont boldSystemFontOfSize:20]];
@@ -544,22 +540,18 @@ static inline NSRegularExpression * NameRegularExpression() {
     
 //http://clientdemo.osvin.biz/FindDinnerPlaceapi//FDinnerApi.svc/PostComment?PlaceID=1&facebookID=22&commenttext=this%20is%20wonderfull%20place%20for%20dinner
 
-
-
     NSString *placeID = [place objectForKey:@"PlaceID"];
     NSString *fbID = appDelegate().userProfile.userFBId;
     NSString *text = textView.text;
 
     if (!text || [text empty]) {
-        
+
         return;
     }
 
     NSString *strURL = [NSString stringWithFormat:@"PostComment?PlaceID=%@&facebookID=%@&commenttext=%@",placeID,fbID,text];
 
     [OSRequest sendAsyncReque:YES url:strURL completionHandle:^(id data , NSError *error){
-
-        NSLog(@"__________________________________________________________________");
 
         if (error) {
 
@@ -583,8 +575,6 @@ static inline NSRegularExpression * NameRegularExpression() {
             [arrayComments addObject:dict];
 
             [OSAlertView setBackgroundColor:[UIColor blackColor] withStrokeColor:[UIColor blackColor]];
-
-          //  [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
             [self  performSelectorOnMainThread:@selector(reloadTableWithAnimation) withObject:nil waitUntilDone:YES];
 
         }
@@ -595,37 +585,91 @@ static inline NSRegularExpression * NameRegularExpression() {
 
 -(void)reloadTableWithAnimation {
 
-    
     [self.tableView beginUpdates];
-
    
-
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:arrayComments.count-1 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
 
      [self.tableView endUpdates];
 
      [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:arrayComments.count-1 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 
-//    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:arrayComments.count-1 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+#pragma mark -     Data
 
+/***************************************************** Get Full details ****************************************************/
+
+-(void)getFullDetails {
+
+    NSString *getPlaceDetail = [NSString stringWithFormat:@"GetDinnerPlaceDetail?PlaceID=%@",[dictData objectForKey:@"PlaceID"]];
+
+    [OSRequest sendAsyncReque:YES url:getPlaceDetail completionHandle:^(id data , NSError *error){
+
+        if (data) {
+
+            NSArray *array = [data objectForKey:@"GetDinnerPlaceDetailResult"];
+
+            if (array.count) {
+
+                place = [[array objectAtIndex:0]retain];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+
+                    [self.tableView  reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                });
+
+
+            }else{
+
+            }
+
+        }
+
+    }];
+
+
+}
+/***************************************************** Get Comments ****************************************************/
+
+-(void)getComments{
+
+    NSString *strURL = [NSString stringWithFormat:@"GetComments?PlaceID=%@",[dictData objectForKey:@"PlaceID"]];
+
+    [OSRequest sendAsyncReque:YES url:strURL completionHandle:^(id data , NSError *error){
+
+        if (data) {
+
+            NSArray *array = (NSArray *)[data objectForKey:@"GetCommentsResult"] ;
+
+            arrayComments = [[NSMutableArray alloc]initWithArray:array];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+                [self.tableView  reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+            });
+        }
+        
+    }];
+    
 }
 
 
 
+#pragma Mark -  ViewLifeCycle....
+
+//BackButtionAction.
 -(void)backBtnClicked{
 
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (id)initWithDict:(NSDictionary *)dict
-{
+- (id)initWithDict:(NSDictionary *)dict {
+    
     self = [super init];
 
     if (self) {
+        
         // Custom initialization
-        place = [dict retain];
-
-        NSLog(@" %@ ",place);
+        dictData = [dict retain];
     }
     
     return self;
@@ -680,30 +724,6 @@ static inline NSRegularExpression * NameRegularExpression() {
     //  rect = btn.frame;
     [self.view addSubview:btn];
 
-//    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn.frame = CGRectMake(320-61,8,56,30);
-//    [btn setBackgroundImage:[UIImage imageNamed:@"back-btn.png"] forState:UIControlStateNormal];
-//    [btn setTitle:@"Save" forState:UIControlStateNormal];
-//    [btn.titleLabel setFont:[UIFont fontWithName:@"arial" size:17]];
-//    [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-//    [btn setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
-//    //move text 10 pixels down and right
-//    [btn setTitleEdgeInsets:UIEdgeInsetsMake(1.5f, 9.0f, 0.0f, 0.0f)];
-//    [btn addTarget:self action:@selector(btnSaveClicked) forControlEvents:UIControlEventTouchUpInside];
-//    //  rect = btn.frame;
-//    [self.view addSubview:btn];
-
-//    RateView *rateView = [[RateView alloc]initWithFrame:CGRectMake(10, 50, 120, 30)];
-//    rateView.backgroundColor   = [UIColor clearColor];
-//    rateView.notSelectedImage  =  [UIImage imageNamed:@"kermit_empty.png"];
-//    rateView.halfSelectedImage = [UIImage imageNamed:@"kermit_half.png"];
-//    rateView.fullSelectedImage = [UIImage imageNamed:@"kermit_full.png"];
-//    rateView.rating = 2.5;
-//    rateView.editable = YES;
-//    rateView.maxRating = 5;
-//    rateView.delegate = self;
-//    [self.view addSubview:rateView];
-
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44, 320, self.view.bounds.size.height-44) style:UITableViewStylePlain];
     tableView.backgroundColor = [UIColor colorWithRed:0.2601 green:0.2530 blue:0.2532 alpha:0.4];//[UIColor clearColor];
     tableView.delegate = self;
@@ -712,24 +732,10 @@ static inline NSRegularExpression * NameRegularExpression() {
     self.tableView = tableView;
     [self.view insertSubview:self.tableView belowSubview:topView];
 
-    // http://clientdemo.osvin.biz/FindDinnerPlaceapi/FDinnerApi.svc/GetDinnerPlaceDetail?PlaceID=2
-
-   // http://clientdemo.osvin.biz/FindDinnerPlaceapi//FDinnerApi.svc/GetComments?PlaceID=1
-
-    NSString *strURL = [NSString stringWithFormat:@"GetComments?PlaceID=%@",[place objectForKey:@"PlaceID"]];
-
-    [OSRequest sendAsyncReque:YES url:strURL completionHandle:^(id data , NSError *error){
-
-        if (data) {
-
-             NSArray *array = (NSArray *)[data objectForKey:@"GetCommentsResult"] ;
-
-             arrayComments = [[NSMutableArray alloc]initWithArray:array];
-             [tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        }
-
-    }];
-
+   
+   
+    [self getFullDetails];
+    [self getComments];
 	// Do any additional setup after loading the view.
     
 }

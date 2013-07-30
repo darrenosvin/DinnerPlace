@@ -14,10 +14,11 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UINavigationController *navController;
-@property (strong, nonatomic) RootViewController *rootViewController;
-@property (strong, nonatomic) FBSession *session;
+@property (strong, nonatomic) RootViewController      *rootViewController;
+@property (strong, nonatomic) UINavigationController  *navController;
 @property (strong, nonatomic) UIActivityIndicatorView *indicatorView;
+
+@property (strong, nonatomic) FBSession *session;
 @property (assign, nonatomic) BOOL fbLogin;
 
 //UserProfile....
